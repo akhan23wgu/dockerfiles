@@ -37,5 +37,8 @@ RUN scripts/install-sdk.sh
 RUN sed -i 's#127.0.0.1#0.0.0.0#' /cloud9/configs/standalone.js 
 
 USER root
- 
+
+# Clean up APT when done.
+RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
 EXPOSE 8080
