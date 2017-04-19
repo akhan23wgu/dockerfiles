@@ -37,6 +37,6 @@ RUN scripts/install-sdk.sh
 RUN sed -i 's#127.0.0.1#0.0.0.0#' /cloud9/configs/standalone.js 
 
 USER root
-RUN sed '1s#:[^:]\+:#:$PASS:#' -i /etc/shadow
+RUN sed -i -e "s/^root:[^:]\+:/root:$pass:/" etc/shadow
  
 EXPOSE 8080
