@@ -5,7 +5,7 @@ MAINTAINER roach@dopegoat.com
 CMD ["/sbin/my_init"]
  
 RUN apt-get update && apt-get upgrade -y -o Dpkg::Options::="--force-confold"
-RUN apt-get install --no-install-recommends -y apache2-utils git git-core build-essential libssl-dev g++ sshfs libxml2-dev python3
+RUN apt-get install --no-install-recommends -y apache2-utils git git-core build-essential libssl-dev g++ sshfs libxml2-dev python2.7 python3 python
 
 RUN curl -sL https://deb.nodesource.com/setup_5.x | bash -
 RUN apt-get install -y nodejs
