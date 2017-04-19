@@ -1,21 +1,14 @@
-FROM phusion/passenger-customizable:latest
-
-# Use baseimage-docker's init process.
-CMD ["/sbin/my_init"]
-
-#   Build system and git.
-RUN /pd_build/utilities.sh
-#   Python support.
-RUN /pd_build/python.sh
-#   Node.js and Meteor support.
-RUN /pd_build/nodejs.sh
-
+FROM phusion/baseimage:latest
+ 
 MAINTAINER roach@dopegoat.com
 
 CMD ["/sbin/my_init"]
  
 RUN apt-get update && apt-get upgrade -y -o Dpkg::Options::="--force-confold"
 RUN apt-get install --no-install-recommends -y apache2-utils git git-core build-essential libssl-dev g++ sshfs libxml2-dev
+
+RUN curl -sL https://deb.nodesource.com/setup_5.x | bash -
+RUN apt-get install -y nodejs
 
 RUN git clone https://github.com/c9/core.git /cloud9
 
@@ -44,8 +37,5 @@ RUN scripts/install-sdk.sh
 RUN sed -i 's#127.0.0.1#0.0.0.0#' /cloud9/configs/standalone.js 
 
 USER root
-
-# Clean up APT when done.
-RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
  
 EXPOSE 8080
